@@ -1,5 +1,8 @@
 <h1><img align="center" src='public/images/bongify-logo.png' height='50' alt='logo' /></h1>
 
+<img width="1470" alt="image" src="https://github.com/SamipPoudel58/Bongify/assets/59493809/28b2bfd8-1b71-4751-8090-11b84b4423e9">
+
+
 ## ⚙️ Tech Stack
 
 - NextJS 13
