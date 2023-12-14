@@ -8,6 +8,18 @@ const inter = Dela_Gothic_One({ weight: '400', subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Bongify | Create Chandler Bing Hugging Vinyl Meme',
   description: 'Bongify - Create Chandler Bing Hugging Vinyl Meme',
+  metadataBase: new URL('https://bongify.vercel.app'),
+  openGraph: {
+    title: 'Bongify | Create Chandler Bing Hugging Vinyl Meme',
+    description: 'Bongify - Create Chandler Bing Hugging Vinyl Meme',
+    url: 'https://bongify.vercel.app',
+    siteName: 'Bongify',
+    type: 'website',
+  },
+  twitter: {
+    title: 'Bongify',
+    card: 'summary_large_image',
+  },
 };
 
 export default function RootLayout({
