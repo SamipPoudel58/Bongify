@@ -34,6 +34,7 @@ export default function RootLayout({
         href="/images/favicon.png"
         type="image/x-icon"
       />
+      <script async src="https://cdn.splitbee.io/sb.js"></script>
       <body className={inter.className}>
         <header className="flex justify-center pt-8">
           <Image
