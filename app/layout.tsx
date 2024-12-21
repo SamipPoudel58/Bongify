@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Dela_Gothic_One, Inter } from 'next/font/google';
 import './globals.css';
 import Image from 'next/image';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Dela_Gothic_One({ weight: '400', subsets: ['latin'] });
 
@@ -34,7 +35,6 @@ export default function RootLayout({
         href="/images/favicon.png"
         type="image/x-icon"
       />
-      <script async src="https://cdn.splitbee.io/sb.js"></script>
       <body className={inter.className}>
         <header className="flex justify-center pt-8">
           <Image
@@ -45,6 +45,7 @@ export default function RootLayout({
           />
         </header>
         {children}
+        <Analytics />
       </body>
     </html>
   );
