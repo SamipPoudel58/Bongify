@@ -1,9 +1,10 @@
 'use client';
-import html2canvas from 'html2canvas';
+import { domToPng } from 'modern-screenshot';
 import { ChangeEvent, useRef, useState } from 'react';
 
 export default function Home() {
   const [uploadedImg, setUploadedImg] = useState<string | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -17,35 +18,34 @@ export default function Home() {
     }
   };
 
-  const downloadMeme = () => {
-    const memeElement = document.getElementById('meme') as HTMLElement;
+  const memeRef = useRef<HTMLInputElement>(null);
 
-    // Set the desired scale for higher resolution
-    const scale = window.matchMedia('(max-width: 767px)').matches ? 2 : 1; // You can adjust this value as needed
+  const downloadMeme = async () => {
+    setIsDownloading(true);
 
-    // Use html2canvas with the scale option
-    html2canvas(memeElement, { scale: scale }).then((canvas) => {
-      // Convert the canvas content to a data URL
-      const dataURL = canvas.toDataURL('image/png');
+    if (!memeRef.current) return;
 
-      // Create a temporary link element
-      const downloadLink = document.createElement('a');
+    const element = memeRef.current;
 
-      // Set the link's href to the data URL
-      downloadLink.href = dataURL;
+    const opts = {
+      quality: 1,
+      scale: 3,
+    };
 
-      // Set the link's download attribute with a desired filename
-      downloadLink.download = 'chanandler_bong_meme.png';
+    try {
+      const dataUrl = await domToPng(element, opts);
 
-      // Append the link to the document
-      document.body.appendChild(downloadLink);
-
-      // Trigger a click on the link to initiate the download
-      downloadLink.click();
-
-      // Remove the link from the document
-      document.body.removeChild(downloadLink);
-    });
+      if (dataUrl) {
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = `bongify-meme-${Date.now()}.png`;
+        link.click();
+      }
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const uploadImgRef = useRef<HTMLInputElement>(null);
@@ -54,22 +54,17 @@ export default function Home() {
     <main className="flex flex-col gap-y-8 xl:flex-row pt-6 sm:pt-12 max-w-[1300px] px-4 sm:px-8 xl:px-0 mx-auto">
       <div
         id="meme"
+        ref={memeRef}
         className="relative max-w-[800px] mx-auto xl:max-w-none xl:w-1/2 aspect-square overflow-hidden"
       >
-        <img
-          className="w-full h-full"
-          src="/images/background.png"
-          alt="background"
-        />
+        <img className="w-full h-full" src="/images/background.png" />
         <img
           className="w-[50%] aspect-square object-cover absolute top-[49%] left-[21.5%] rotate-[15deg] brightness-90 shadow-2xl"
           src={uploadedImg || '/images/bongify-album.png'}
-          alt="album cover"
         />
         <img
           className="absolute top-0 left-0 w-full h-full drop-shadow-[0_8px_16px_rgba(0,0,0,1)]"
           src="/images/foreground.png"
-          alt="foreground"
         />
       </div>
 
@@ -101,10 +96,17 @@ export default function Home() {
           className="hover:shadow-[0_8px_32px_rgba(0,219,77,0.161)] mt-12 flex gap-x-4 items-center justify-center text-background bg-primary text-xl md:text-2xl w-full mb-4 rounded py-4 px-6"
         >
           {uploadedImg ? (
-            <>
-              <DownloadIcon />
-              <span>Download Your Meme</span>
-            </>
+            isDownloading ? (
+              <>
+                <Spinner />
+                <span>Downloading...</span>
+              </>
+            ) : (
+              <>
+                <DownloadIcon />
+                <span>Download Your Meme</span>
+              </>
+            )
           ) : (
             <>
               <UploadIcon />
@@ -166,4 +168,25 @@ const DownloadIcon = () => (
       />
     </svg>
   </div>
+);
+
+const Spinner = ({
+  classes = 'h-8 w-8 md:h-10 md:w-10',
+}: {
+  classes?: string;
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${classes} animate-spin`}
+  >
+    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+  </svg>
 );

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.4.1",
-    "html2canvas": "^1.4.1",
+    "modern-screenshot": "^4.5.5",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"
