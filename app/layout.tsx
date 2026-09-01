@@ -3,6 +3,7 @@ import { Dela_Gothic_One, Inter } from 'next/font/google';
 import './globals.css';
 import Image from 'next/image';
 import { Analytics } from '@vercel/analytics/react';
+import ReliefBanner from '../components/relief-banner';
 
 const inter = Dela_Gothic_One({ weight: '400', subsets: ['latin'] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
         type="image/x-icon"
       />
       <body className={inter.className}>
+        <ReliefBanner />
         <header className="flex justify-center pt-8">
           <Image
             src="/images/bongify-logo.png"
