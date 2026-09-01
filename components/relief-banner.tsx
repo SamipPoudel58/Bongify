@@ -3,13 +3,12 @@ const ReliefBanner = () => (
     href="https://pmdrf.nchl.com.np/"
     target="_blank"
     rel="noopener noreferrer"
-    className="group flex h-10 w-full items-center justify-center gap-x-2 overflow-hidden whitespace-nowrap bg-primary px-4 text-[#0a0a0a]"
+    className="group flex h-10 w-full items-center justify-center gap-x-2 whitespace-nowrap bg-primary px-4 font-inter text-[#0a0a0a]"
   >
-    {/* the site font is wide, so the full line only shows where it comfortably fits */}
-    <span className="hidden text-[10px] uppercase leading-none tracking-wide xl:inline">
+    <span className="hidden text-[11px] font-semibold uppercase leading-none tracking-wider sm:inline">
       {`Nepal is recovering from severe floods. Donate to the Government of Nepal Prime Minister's Disaster Relief Fund`}
     </span>
-    <span className="text-[10px] uppercase leading-none tracking-wide xl:hidden">
+    <span className="text-[11px] font-semibold uppercase leading-none tracking-wider sm:hidden">
       Donate to Nepal flood relief
     </span>
     <svg

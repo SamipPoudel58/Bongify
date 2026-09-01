@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import ReliefBanner from '../components/relief-banner';
 
 const inter = Dela_Gothic_One({ weight: '400', subsets: ['latin'] });
+const interSans = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: 'Bongify - Create Chandler Bing Hugging Vinyl Meme',
@@ -36,7 +37,7 @@ export default function RootLayout({
         href="/images/favicon.png"
         type="image/x-icon"
       />
-      <body className={inter.className}>
+      <body className={`${inter.className} ${interSans.variable}`}>
         <ReliefBanner />
         <header className="flex justify-center pt-8">
           <Image
